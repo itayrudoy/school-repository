@@ -16,4 +16,9 @@ public class TestUsersController implements UsersController {
         }
         return false;
     }
+
+    @Override
+    public boolean signUp(String email, String username, String password) {
+        return false;
+    }
 }

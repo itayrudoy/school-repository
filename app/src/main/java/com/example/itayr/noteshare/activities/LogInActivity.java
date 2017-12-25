@@ -45,9 +45,11 @@ public class LogInActivity extends AppCompatActivity {
                 String email = mEmailEditText.getText().toString();
                 String password = mPasswordEditText.getText().toString();
                 if (mUsersController.logIn(email, password)) {
+                    Toast.makeText(LogInActivity.this, "User Log In Successful", Toast.LENGTH_SHORT).show();
                     Log.d(LOG_TAG, "User Log In Successful");
                     openCatalog();
                 } else {
+                    Toast.makeText(LogInActivity.this, "User is incorrect", Toast.LENGTH_SHORT).show();
                     Log.d(LOG_TAG, "User is incorrect");
                 }
             }

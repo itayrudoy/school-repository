@@ -19,7 +19,8 @@
         <activity android:name=".activities.CatalogActivity" />
         <activity android:name=".activities.GroupActivity" />
         <activity android:name=".activities.NoteActivity" />
-        <activity android:name=".activities.MembersActivity"></activity>
+        <activity android:name=".activities.MembersActivity" />
+        <activity android:name=".activities.SignUpActivity"></activity>
     </application>
 
 </manifest>

@@ -14,4 +14,13 @@ public interface UsersController {
      */
     boolean logIn(String email, String password);
 
+    /**
+     * Tries to sign up with the given information.
+     * @param email the email entered.
+     * @param username the username entered.
+     * @param password the password entered.
+     * @return true if the sign up was successful, false otherwise.
+     */
+    boolean signUp(String email, String username, String password);
+
 }
