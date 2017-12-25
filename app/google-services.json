@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "972570670594",
+    "firebase_url": "https://noteshare-d376c.firebaseio.com",
+    "project_id": "noteshare-d376c",
+    "storage_bucket": "noteshare-d376c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:972570670594:android:c47dbb6ad6ac4e92",
+        "android_client_info": {
+          "package_name": "com.example.itayr.noteshare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "972570670594-78b5uc5ki02fohb95qtsvptsd7lq0p1t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.itayr.noteshare",
+            "certificate_hash": "afddecb70c99d1cc4ee30dade4f0db741630bb64"
+          }
+        },
+        {
+          "client_id": "972570670594-5parc3q0icsj9tjqvgj97pqp9hsbai1u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCh0gbwT6xcj-VmK7TxhVU36AwTNVZninc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "972570670594-5parc3q0icsj9tjqvgj97pqp9hsbai1u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
