@@ -19,6 +19,9 @@ public class TestUsersController implements UsersController {
 
     @Override
     public boolean signUp(String email, String username, String password) {
+        if (email.equals("h")) {
+            return true;
+        }
         return false;
     }
 }

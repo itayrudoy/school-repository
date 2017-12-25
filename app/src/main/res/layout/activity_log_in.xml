@@ -9,6 +9,16 @@
     tools:context="com.example.itayr.noteshare.activities.LogInActivity"
     android:padding="20dp">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome"
+        android:textSize="30sp"
+        android:textColor="@android:color/black"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/to_sign_up_button"
+        android:layout_marginTop="20dp"/>
+
     <EditText
         android:id="@+id/email_edit_text"
         android:layout_width="match_parent"
@@ -29,9 +39,20 @@
         android:id="@+id/log_in_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
         android:text="@string/log_in_button_text"
         android:layout_below="@id/password_edit_text"
         android:background="@color/colorPrimary"
         android:textColor="@android:color/white" />
+
+    <Button
+        android:id="@+id/to_sign_up_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sign Up"
+        android:background="@android:color/transparent"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"/>
 
 </RelativeLayout>
