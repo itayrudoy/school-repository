@@ -9,4 +9,9 @@
 
     <include layout="@layout/app_toolbar" />
 
+    <ListView
+        android:id="@+id/groups_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></ListView>
+
 </LinearLayout>

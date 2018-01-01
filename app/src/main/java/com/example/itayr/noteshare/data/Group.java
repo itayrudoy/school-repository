@@ -8,21 +8,22 @@ import java.util.ArrayList;
 
 public class Group {
 
-    private String name;
+    private String title;
     private ArrayList<User> users;
     private ArrayList<BoardItem> boardItems;
 
-    public Group(String name, ArrayList<User> users, ArrayList<BoardItem> boardItems) {
+    public Group(String title, ArrayList<User> users, ArrayList<BoardItem> boardItems) {
+        this.title = title;
         this.users = users;
         this.boardItems = boardItems;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public ArrayList<User> getUsers() {

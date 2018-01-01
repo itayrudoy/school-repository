@@ -6,13 +6,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.itayr.noteshare.activities.LogInActivity"
+    tools:context="com.example.itayr.noteshare.activities.SignUpActivity"
     android:padding="20dp">
+
+    <Button
+        android:id="@+id/to_log_in_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:text="@string/log_in_text"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="-10dp"
+        android:layout_marginRight="-15dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Register"
+        android:text="@string/sign_up_page_title"
         android:textSize="30sp"
         android:layout_centerHorizontal="true"
         android:textColor="@android:color/black"
@@ -46,7 +58,7 @@
         android:id="@+id/sign_up_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/sign_up_button_text"
+        android:text="@string/sign_up_text"
         android:layout_below="@id/password_sign_up_edit_text"
         android:background="@color/colorPrimary"
         android:textColor="@android:color/white" />

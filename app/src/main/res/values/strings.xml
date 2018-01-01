@@ -1,9 +1,11 @@
 <resources>
     <string name="app_name">NoteShare</string>
 
-    <string name="log_in_button_text">Log In</string>
-    <string name="sign_up_button_text">Sign Up</string>
+    <string name="log_in_text">Log In</string>
+    <string name="sign_up_text">Sign Up</string>
     <string name="email_field_hint">Email</string>
     <string name="username_field_hint">Username</string>
     <string name="password_field_hint">Password</string>
+    <string name="log_in_page_title">Welcome</string>
+    <string name="sign_up_page_title">Register</string>
 </resources>

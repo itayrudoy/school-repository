@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.itayr.noteshare.R;
 import com.example.itayr.noteshare.controller.TestUsersController;
+import com.example.itayr.noteshare.controller.UsersController;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -22,7 +23,7 @@ public class LogInActivity extends AppCompatActivity {
 
     private static String LOG_TAG = LogInActivity.class.getSimpleName();
 
-    private TestUsersController mUsersController;
+    private UsersController mUsersController;
 
     private EditText mEmailEditText;
     private EditText mPasswordEditText;
@@ -39,6 +40,7 @@ public class LogInActivity extends AppCompatActivity {
         mPasswordEditText = (EditText) findViewById(R.id.password_edit_text);
         mLogInButton = (Button) findViewById(R.id.log_in_button);
 
+        //Going to sign up page button.
         findViewById(R.id.to_sign_up_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,13 +52,17 @@ public class LogInActivity extends AppCompatActivity {
         mLogInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Getting the email and password from the text fields.
                 String email = mEmailEditText.getText().toString();
                 String password = mPasswordEditText.getText().toString();
+
                 if (mUsersController.logIn(email, password)) {
+                    //User log in was successful.
                     Toast.makeText(LogInActivity.this, "User Log In Successful", Toast.LENGTH_SHORT).show();
                     Log.d(LOG_TAG, "User Log In Successful");
                     openCatalog();
                 } else {
+                    //Log in was unsuccessful.
                     Toast.makeText(LogInActivity.this, "User is incorrect", Toast.LENGTH_SHORT).show();
                     Log.d(LOG_TAG, "User is incorrect");
                 }
@@ -64,6 +70,7 @@ public class LogInActivity extends AppCompatActivity {
         });
     }
 
+    //Opens the catalog activity when the use logs in successfully.
     private void openCatalog() {
         Intent intent = new Intent(this, CatalogActivity.class);
         startActivity(intent);

@@ -8,30 +8,25 @@ import java.util.ArrayList;
 
 public class User {
 
-    private String email;
-    private String username;
+    private String userId;
     private ArrayList<Group> groups;
 
-    public User(String email, String username, ArrayList<Group> groups) {
-        this.email = email;
-        this.username = username;
+    public User(String userId) {
+        this.userId = userId;
+        this.groups = new ArrayList<Group>();
+    }
+
+    public User(String userId, ArrayList<Group> groups) {
+        this.userId = userId;
         this.groups = groups;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public ArrayList<Group> getGroups() {
