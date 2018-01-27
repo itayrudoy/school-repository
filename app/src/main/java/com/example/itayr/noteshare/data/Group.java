@@ -9,10 +9,10 @@ import java.util.ArrayList;
 public class Group {
 
     private String title;
-    private ArrayList<User> users;
+    private ArrayList<String> users;
     private ArrayList<BoardItem> boardItems;
 
-    public Group(String title, ArrayList<User> users, ArrayList<BoardItem> boardItems) {
+    public Group(String title, ArrayList<String> users, ArrayList<BoardItem> boardItems) {
         this.title = title;
         this.users = users;
         this.boardItems = boardItems;
@@ -26,11 +26,11 @@ public class Group {
         this.title = title;
     }
 
-    public ArrayList<User> getUsers() {
+    public ArrayList<String> getUsers() {
         return users;
     }
 
-    public void setUsers(ArrayList<User> users) {
+    public void setUsers(ArrayList<String> users) {
         this.users = users;
     }
 
