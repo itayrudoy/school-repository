@@ -16,8 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.CatalogActivity" />
-        <activity android:name=".activities.GroupActivity" />
+        <activity android:name=".activities.GroupsActivity" />
+        <activity android:name=".activities.BoardActivity" />
         <activity android:name=".activities.NoteActivity" />
         <activity android:name=".activities.MembersActivity" />
         <activity android:name=".activities.SignUpActivity"></activity>
