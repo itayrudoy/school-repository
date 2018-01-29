@@ -22,7 +22,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -68,8 +70,7 @@ public class GroupsActivity extends AppCompatActivity {
         mGroupsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String groupTitle = mGroupsAdapter.getItem(position).getName();
-                startGroupActivity(groupTitle);
+                goToBoard(mGroupsAdapter.getItem(position).getId());
             }
         });
 
@@ -80,6 +81,13 @@ public class GroupsActivity extends AppCompatActivity {
             }
         });
 
+        displayGroups();
+    }
+
+    private void goToBoard(String id) {
+        Intent intent = new Intent(this, BoardActivity.class);
+        intent.putExtra("groupId", id);
+        startActivity(intent);
     }
     
     private void createNewGroup() {
@@ -95,36 +103,28 @@ public class GroupsActivity extends AppCompatActivity {
             Log.d(LOG_TAG, "There is no user logged in.");
         }
 
-        displayGroups();
-
     }
 
+    //Gets the groups from firestore and displays them to the screen
+    //every time a group is changed or a group is added or deleted.
     private void displayGroups() {
-        mGroupsAdapter.clear();
         mFirestore.collection("groups")
                 .whereEqualTo("usersIds." + mUser.getUid(), true)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (DocumentSnapshot documentSnapshot : task.getResult()) {
-                                Toast.makeText(GroupsActivity.this, "Got the groups", Toast.LENGTH_SHORT).show();
-                                Group group = documentSnapshot.toObject(Group.class);
-                                mGroupsAdapter.add(group);
-                            }
-                        } else {
-                            Log.d(LOG_TAG, "Error getting the groups documents");
-                            Toast.makeText(GroupsActivity.this, "Error getting groups", Toast.LENGTH_SHORT).show();
+                    public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w(LOG_TAG, e.getMessage());
+                            return;
+                        }
+
+                        mGroupsAdapter.clear();
+                        for (DocumentSnapshot documentSnapshot : documentSnapshots) {
+                            Group group = documentSnapshot.toObject(Group.class);
+                            mGroupsAdapter.add(group);
                         }
                     }
                 });
-    }
-
-    private void startGroupActivity(String groupTitle) {
-        Intent intent = new Intent(this, BoardActivity.class);
-        intent.putExtra("groupTitle", groupTitle);
-        startActivity(intent);
     }
 
     //Sets the toolbar for the activity.

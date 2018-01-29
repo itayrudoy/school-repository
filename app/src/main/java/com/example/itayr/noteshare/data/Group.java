@@ -10,6 +10,7 @@ import java.util.Map;
 
 public class Group {
 
+    private String id;
     private String name;
     private Map<String, Boolean> usersIds;
 
@@ -25,6 +26,14 @@ public class Group {
     public Group(String name) {
         this.name = name;
         usersIds = new HashMap<String, Boolean>();
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
