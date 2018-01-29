@@ -11,8 +11,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.itayr.noteshare.R;
-import com.example.itayr.noteshare.controller.TestUsersController;
-import com.example.itayr.noteshare.controller.UsersController;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -23,7 +21,6 @@ public class LogInActivity extends AppCompatActivity {
 
     private static String LOG_TAG = LogInActivity.class.getSimpleName();
 
-    private UsersController mUsersController;
     private FirebaseAuth mAuth;
 
     private EditText mEmailEditText;
@@ -35,7 +32,6 @@ public class LogInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
 
-        mUsersController = new TestUsersController();
         mAuth = FirebaseAuth.getInstance();
 
         mEmailEditText = (EditText) findViewById(R.id.email_edit_text);
@@ -72,10 +68,6 @@ public class LogInActivity extends AppCompatActivity {
     }
 
     private void signIn(String email, String password) {
-        if (password.isEmpty() || email.isEmpty()) {
-            Toast.makeText(this, "You have to fill all the fields above.", Toast.LENGTH_SHORT).show();
-            return;
-        }
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override

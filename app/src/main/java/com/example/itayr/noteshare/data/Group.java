@@ -1,6 +1,8 @@
 package com.example.itayr.noteshare.data;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by itayr on 12/24/2017.
@@ -8,37 +10,36 @@ import java.util.ArrayList;
 
 public class Group {
 
-    private String title;
-    private ArrayList<String> users;
-    private ArrayList<BoardItem> boardItems;
+    private String name;
+    private Map<String, Boolean> usersIds;
 
-    public Group(String title, ArrayList<String> users, ArrayList<BoardItem> boardItems) {
-        this.title = title;
-        this.users = users;
-        this.boardItems = boardItems;
+    public Group() {
+
     }
 
-    public String getTitle() {
-        return title;
+    public Group(String name, Map<String, Boolean> usersIds) {
+        this.name = name;
+        this.usersIds = usersIds;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public Group(String name) {
+        this.name = name;
+        usersIds = new HashMap<String, Boolean>();
     }
 
-    public ArrayList<String> getUsers() {
-        return users;
+    public String getName() {
+        return name;
     }
 
-    public void setUsers(ArrayList<String> users) {
-        this.users = users;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public ArrayList<BoardItem> getBoardItems() {
-        return boardItems;
+    public Map<String, Boolean> getUsersIds() {
+        return usersIds;
     }
 
-    public void setBoardItems(ArrayList<BoardItem> boardItems) {
-        this.boardItems = boardItems;
+    public void setUsersIds(Map<String, Boolean> usersIds) {
+        this.usersIds = usersIds;
     }
 }

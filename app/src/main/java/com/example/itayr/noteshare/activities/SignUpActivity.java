@@ -11,20 +11,21 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.itayr.noteshare.R;
-import com.example.itayr.noteshare.controller.TestUsersController;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
 
 public class SignUpActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = SignUpActivity.class.getSimpleName();
 
-    private TestUsersController mUsersController;
     private FirebaseAuth mAuth;
+    private FirebaseFirestore mFirestore;
 
     private EditText mEmailEditText;
     private EditText mUsernameEditText;
@@ -36,8 +37,8 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        mUsersController = new TestUsersController();
         mAuth = FirebaseAuth.getInstance();
+        mFirestore = FirebaseFirestore.getInstance();
 
         mEmailEditText = (EditText) findViewById(R.id.email_sign_up_edit_text);
         mUsernameEditText = (EditText) findViewById(R.id.username_sign_up_edit_text);
@@ -79,10 +80,6 @@ public class SignUpActivity extends AppCompatActivity {
      * @param username the username of the account.
      */
     private void createAccount(String email, String password, final String username) {
-        if (email.isEmpty() || password.isEmpty() || username.isEmpty()) {
-            Toast.makeText(this, "You have to fill all the fields above.", Toast.LENGTH_SHORT).show();
-            return;
-        }
         mAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
@@ -92,6 +89,7 @@ public class SignUpActivity extends AppCompatActivity {
                         Toast.makeText(SignUpActivity.this, "Account Created", Toast.LENGTH_LONG).show();
                         UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(username).build();
                         mAuth.getCurrentUser().updateProfile(userProfileChangeRequest);
+                        addUserDoDatabaseAndStartActivity(mAuth.getCurrentUser().getUid(), username);
                         goToCatalog();
                     } else {
                         //Couldn't create account
@@ -100,6 +98,13 @@ public class SignUpActivity extends AppCompatActivity {
                     }
                 }
             });
+    }
+
+    //Adds a document of a user in the firestore database.
+    private void addUserDoDatabaseAndStartActivity(String userId, String username) {
+        HashMap<String, String> user = new HashMap();
+        user.put("username", username);
+        mFirestore.collection("users").document(userId).set(user);
     }
 
     //Checks if the fields aren't empty.

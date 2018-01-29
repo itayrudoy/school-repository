@@ -1,6 +1,8 @@
 package com.example.itayr.noteshare.activities;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -10,14 +12,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.itayr.noteshare.R;
 import com.example.itayr.noteshare.adapters.GroupsAdapter;
-import com.example.itayr.noteshare.controller.BoardItemsController;
-import com.example.itayr.noteshare.controller.TestBoardItemsController;
-import com.example.itayr.noteshare.data.User;
+import com.example.itayr.noteshare.data.Group;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
 
 public class GroupsActivity extends AppCompatActivity {
 
@@ -25,11 +33,12 @@ public class GroupsActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
+    private FirebaseFirestore mFirestore;
 
-    private BoardItemsController mItemsController;
     private GroupsAdapter mGroupsAdapter;
 
     private ListView mGroupsListView;
+    private FloatingActionButton mAddGroupsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,20 +48,43 @@ public class GroupsActivity extends AppCompatActivity {
         setUpToolbar();
 
         mAuth = FirebaseAuth.getInstance();
-        mItemsController = new TestBoardItemsController();
+        mUser = mAuth.getCurrentUser();
+        mFirestore = FirebaseFirestore.getInstance();
 
         mGroupsListView = (ListView) findViewById(R.id.groups_list_view);
-        mGroupsAdapter = new GroupsAdapter(this,mItemsController.getGroups(new User("01")));
+        mAddGroupsButton = (FloatingActionButton) findViewById(R.id.add_group_button);
+
+        ArrayList<Group> groups = new ArrayList<Group>();
+        groups.add(new Group("group 1", null));
+        groups.add(new Group("group 2", null));
+        groups.add(new Group("group 3", null));
+        groups.add(new Group("group 4", null));
+        groups.add(new Group("group 5", null));
+        groups.add(new Group("group 6", null));
+
+        mGroupsAdapter = new GroupsAdapter(this, groups);
         mGroupsListView.setAdapter(mGroupsAdapter);
 
         mGroupsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String groupTitle = mGroupsAdapter.getItem(position).getTitle();
+                String groupTitle = mGroupsAdapter.getItem(position).getName();
                 startGroupActivity(groupTitle);
             }
         });
 
+        mAddGroupsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createNewGroup();
+            }
+        });
+
+    }
+    
+    private void createNewGroup() {
+        Intent intent = new Intent(this, CreateGroupActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -62,6 +94,31 @@ public class GroupsActivity extends AppCompatActivity {
         if (mUser == null) {
             Log.d(LOG_TAG, "There is no user logged in.");
         }
+
+        displayGroups();
+
+    }
+
+    private void displayGroups() {
+        mGroupsAdapter.clear();
+        mFirestore.collection("groups")
+                .whereEqualTo("usersIds." + mUser.getUid(), true)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (DocumentSnapshot documentSnapshot : task.getResult()) {
+                                Toast.makeText(GroupsActivity.this, "Got the groups", Toast.LENGTH_SHORT).show();
+                                Group group = documentSnapshot.toObject(Group.class);
+                                mGroupsAdapter.add(group);
+                            }
+                        } else {
+                            Log.d(LOG_TAG, "Error getting the groups documents");
+                            Toast.makeText(GroupsActivity.this, "Error getting groups", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
     private void startGroupActivity(String groupTitle) {
@@ -72,7 +129,7 @@ public class GroupsActivity extends AppCompatActivity {
 
     //Sets the toolbar for the activity.
     private void setUpToolbar() {
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.app_toolbar);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
 
         getSupportActionBar().setTitle("Groups");

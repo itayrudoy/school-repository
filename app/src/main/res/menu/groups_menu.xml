@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/sign_out"
         android:title="Sign Out"
+        android:id="@+id/sign_out"
+        android:name="Sign Out"
         app:showAsAction="never" />
 </menu>
