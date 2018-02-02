@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.itayr.noteshare.R;
 import com.example.itayr.noteshare.data.Group;
+import com.example.itayr.noteshare.helpers.FirebaseConverter;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -61,22 +62,13 @@ public class CreateGroupActivity extends AppCompatActivity {
         final Map<String, Boolean> map = new HashMap<>();
         map.put(userId, true);
         Group newGroup = new Group(groupName, map);
-        mFirestore.collection("groups").add(newGroup)
+        mFirestore.collection("groups").add(FirebaseConverter.convertGroupToMap(newGroup))
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
 
-                        String id = documentReference.getId();
-                        Group group = new Group(groupName, map);
-                        group.setId(id);
-                        documentReference.set(group)
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Toast.makeText(CreateGroupActivity.this, "Group created", Toast.LENGTH_SHORT).show();
-                                    finish();
-                                }
-                        });
+                        Toast.makeText(CreateGroupActivity.this, "Group Created", Toast.LENGTH_SHORT).show();
+                        finish();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

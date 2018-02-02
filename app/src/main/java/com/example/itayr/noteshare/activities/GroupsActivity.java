@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.example.itayr.noteshare.R;
 import com.example.itayr.noteshare.adapters.GroupsAdapter;
 import com.example.itayr.noteshare.data.Group;
+import com.example.itayr.noteshare.helpers.FirebaseConverter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,6 +29,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class GroupsActivity extends AppCompatActivity {
 
@@ -56,21 +58,13 @@ public class GroupsActivity extends AppCompatActivity {
         mGroupsListView = (ListView) findViewById(R.id.groups_list_view);
         mAddGroupsButton = (FloatingActionButton) findViewById(R.id.add_group_button);
 
-        ArrayList<Group> groups = new ArrayList<Group>();
-        groups.add(new Group("group 1", null));
-        groups.add(new Group("group 2", null));
-        groups.add(new Group("group 3", null));
-        groups.add(new Group("group 4", null));
-        groups.add(new Group("group 5", null));
-        groups.add(new Group("group 6", null));
-
-        mGroupsAdapter = new GroupsAdapter(this, groups);
+        mGroupsAdapter = new GroupsAdapter(this, new ArrayList<Group>());
         mGroupsListView.setAdapter(mGroupsAdapter);
 
         mGroupsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                goToBoard(mGroupsAdapter.getItem(position).getId());
+                goToBoard(mGroupsAdapter.getGroupId(position));
             }
         });
 
@@ -120,7 +114,7 @@ public class GroupsActivity extends AppCompatActivity {
 
                         mGroupsAdapter.clear();
                         for (DocumentSnapshot documentSnapshot : documentSnapshots) {
-                            Group group = documentSnapshot.toObject(Group.class);
+                            Group group = FirebaseConverter.convertToGroup(documentSnapshot);
                             mGroupsAdapter.add(group);
                         }
                     }

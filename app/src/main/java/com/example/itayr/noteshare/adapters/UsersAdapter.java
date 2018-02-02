@@ -12,16 +12,14 @@ import android.widget.TextView;
 import com.example.itayr.noteshare.R;
 import com.example.itayr.noteshare.data.Group;
 
-import java.util.List;
-import java.util.Map;
+import java.util.ArrayList;
 
 /**
- * Created by itayr on 12/27/2017.
+ * Created by itayr on 1/30/2018.
  */
 
-public class GroupsAdapter extends ArrayAdapter<Group> {
-
-    public GroupsAdapter(@NonNull Context context, @NonNull List<Group> objects) {
+public class UsersAdapter extends ArrayAdapter<String> {
+    public UsersAdapter(@NonNull Context context, @NonNull ArrayList<String> objects) {
         super(context, 0, objects);
     }
 
@@ -32,21 +30,12 @@ public class GroupsAdapter extends ArrayAdapter<Group> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.group_layout, parent, false);
         }
 
-        Group group = getItem(position);
+        String username = getItem(position);
 
-        TextView mGroupTitleTextView = (TextView) convertView.findViewById(R.id.group_title_text_view);
-        mGroupTitleTextView.setText(group.getName());
+        TextView mUsernameTextView = (TextView) convertView.findViewById(R.id.group_title_text_view);
+        mUsernameTextView.setText(username);
 
         return convertView;
-    }
-
-    /**
-     * Returns the id of the group in a specific position in the list.
-     * @param position the position of the group in the list.
-     * @return the id of the group.
-     */
-    public String getGroupId(int position) {
-        return getItem(position).getId();
     }
 
 }

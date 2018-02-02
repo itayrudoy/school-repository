@@ -15,6 +15,7 @@ import com.example.itayr.noteshare.R;
 import com.example.itayr.noteshare.adapters.BoardItemsAdapter;
 import com.example.itayr.noteshare.data.BoardItem;
 import com.example.itayr.noteshare.data.Group;
+import com.example.itayr.noteshare.helpers.FirebaseConverter;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -55,7 +56,7 @@ public class BoardActivity extends AppCompatActivity {
                             return;
                         }
 
-                        mGroup = documentSnapshot.toObject(Group.class);
+                        mGroup = FirebaseConverter.convertToGroup(documentSnapshot);
                         getSupportActionBar().setTitle(mGroup.getName());
                     }
                 });
@@ -97,6 +98,7 @@ public class BoardActivity extends AppCompatActivity {
                 return true;
             case R.id.view_members:
                 Intent intent = new Intent(this, MembersActivity.class);
+                intent.putExtra("groupId", mGroupId);
                 startActivity(intent);
                 return true;
             case R.id.quit_group:
@@ -108,6 +110,6 @@ public class BoardActivity extends AppCompatActivity {
     }
 
     private void quitGroup() {
-
+        //TODO
     }
 }

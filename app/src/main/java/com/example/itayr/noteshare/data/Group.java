@@ -10,45 +10,41 @@ import java.util.Map;
 
 public class Group {
 
-    private String id;
-    private String name;
-    private Map<String, Boolean> usersIds;
+    private String mId;
+    private String mName;
+    private Map<String, Boolean> mUsersIds;
 
-    public Group() {
-
+    public Group(String id, String name, Map<String, Boolean> usersIds) {
+        mId = id;
+        mName = name;
+        mUsersIds = usersIds;
     }
 
     public Group(String name, Map<String, Boolean> usersIds) {
-        this.name = name;
-        this.usersIds = usersIds;
-    }
-
-    public Group(String name) {
-        this.name = name;
-        usersIds = new HashMap<String, Boolean>();
+        this("", name, usersIds);
     }
 
     public String getId() {
-        return id;
+        return mId;
     }
 
     public void setId(String id) {
-        this.id = id;
+        mId = id;
     }
 
     public String getName() {
-        return name;
+        return mName;
     }
 
     public void setName(String name) {
-        this.name = name;
+        mName = name;
     }
 
     public Map<String, Boolean> getUsersIds() {
-        return usersIds;
+        return mUsersIds;
     }
 
     public void setUsersIds(Map<String, Boolean> usersIds) {
-        this.usersIds = usersIds;
+        mUsersIds = usersIds;
     }
 }
