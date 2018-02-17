@@ -75,7 +75,7 @@ public class GroupsActivity extends AppCompatActivity {
             }
         });
 
-        displayGroups();
+        getAndDisplayGroups();
     }
 
     private void goToBoard(String id) {
@@ -101,7 +101,7 @@ public class GroupsActivity extends AppCompatActivity {
 
     //Gets the groups from firestore and displays them to the screen
     //every time a group is changed or a group is added or deleted.
-    private void displayGroups() {
+    private void getAndDisplayGroups() {
         mFirestore.collection("groups")
                 .whereEqualTo("usersIds." + mUser.getUid(), true)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -114,6 +114,7 @@ public class GroupsActivity extends AppCompatActivity {
 
                         mGroupsAdapter.clear();
                         for (DocumentSnapshot documentSnapshot : documentSnapshots) {
+
                             Group group = FirebaseConverter.convertToGroup(documentSnapshot);
                             mGroupsAdapter.add(group);
                         }

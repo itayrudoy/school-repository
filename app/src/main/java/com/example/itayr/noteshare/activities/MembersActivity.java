@@ -1,16 +1,20 @@
 package com.example.itayr.noteshare.activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.itayr.noteshare.R;
+import com.example.itayr.noteshare.adapters.UsersAdapter;
 import com.example.itayr.noteshare.data.Group;
 import com.example.itayr.noteshare.helpers.FirebaseConverter;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -30,9 +34,10 @@ public class MembersActivity extends AppCompatActivity {
     private String mGroupId;
     private Group mGroup;
     private FirebaseFirestore mFirestore;
-    private ArrayAdapter<String> mAdapter;
+    private UsersAdapter mAdapter;
 
     private ListView mMembersListView;
+    private Button mAddMemberButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +47,20 @@ public class MembersActivity extends AppCompatActivity {
         setUpToolbar();
 
         mGroupId = getIntent().getStringExtra("groupId");
-        mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>());
+        mAdapter = new UsersAdapter(this);
         mMembersListView = (ListView) findViewById(R.id.members_list_view);
+        mAddMemberButton = (Button) findViewById(R.id.add_member_button);
+
         mMembersListView.setAdapter(mAdapter);
+
+        mAddMemberButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MembersActivity.this, AddMemberActivity.class);
+                intent.putExtra("groupId", mGroupId);
+                startActivity(intent);
+            }
+        });
 
         mFirestore = FirebaseFirestore.getInstance();
         mFirestore.collection("groups").document(mGroupId)
@@ -75,7 +91,7 @@ public class MembersActivity extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            mAdapter.add(documentSnapshot.getString("username"));
+                            mAdapter.add(FirebaseConverter.convertToUser(documentSnapshot));
                         }
                     });
         }
@@ -115,10 +131,6 @@ public class MembersActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    private void addMember() {
-        //TODO
     }
 
 }

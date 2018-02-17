@@ -8,32 +8,27 @@ import java.util.ArrayList;
 
 public class User {
 
-    private String userId;
-    private ArrayList<Group> groups;
+    private String mId;
+    private String mUsername;
 
-    public User(String userId) {
-        this.userId = userId;
-        this.groups = new ArrayList<Group>();
+    public User(String id, String username) {
+        this.mId = id;
+        this.mUsername = username;
     }
 
-    public User(String userId, ArrayList<Group> groups) {
-        this.userId = userId;
-        this.groups = groups;
+    public String getId() {
+        return mId;
     }
 
-    public String getUserId() {
-        return userId;
+    public void setId(String id) {
+        mId = id;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public String getUsername() {
+        return mUsername;
     }
 
-    public ArrayList<Group> getGroups() {
-        return groups;
-    }
-
-    public void setGroups(ArrayList<Group> groups) {
-        this.groups = groups;
+    public void setUsername(String username) {
+        mUsername = username;
     }
 }

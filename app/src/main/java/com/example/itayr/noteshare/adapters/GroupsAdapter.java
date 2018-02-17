@@ -40,6 +40,8 @@ public class GroupsAdapter extends ArrayAdapter<Group> {
         return convertView;
     }
 
+    
+
     /**
      * Returns the id of the group in a specific position in the list.
      * @param position the position of the group in the list.

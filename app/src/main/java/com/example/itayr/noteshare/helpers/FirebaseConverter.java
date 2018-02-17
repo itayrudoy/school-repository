@@ -1,6 +1,7 @@
 package com.example.itayr.noteshare.helpers;
 
 import com.example.itayr.noteshare.data.Group;
+import com.example.itayr.noteshare.data.User;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.HashMap;
@@ -22,6 +23,11 @@ public class FirebaseConverter {
         Map<String, Object> groupMap = groupSnapshot.getData();
         String groupId = groupSnapshot.getId();
 
+        //check if it's the correct snapshot.
+        if (!groupMap.containsKey("name") || !groupMap.containsKey("usersIds")) {
+            return null;
+        }
+
         return new Group(groupId, groupMap.get("name").toString(), (Map<String, Boolean>) groupMap.get("usersIds"));
     }
 
@@ -37,6 +43,36 @@ public class FirebaseConverter {
         groupMap.put("usersIds", group.getUsersIds());
 
         return groupMap;
+    }
+
+    /**
+     * Converts a firebase snapshot of a user to a user object.
+     * @param userSnapshot the user snapshot you want to convert.
+     * @return a user object with right values, null if the snapshot was wrong.
+     */
+    public static User convertToUser(DocumentSnapshot userSnapshot) {
+        Map<String, Object> userMap = userSnapshot.getData();
+        String userId = userSnapshot.getId();
+
+        //check if it's the correct snapshot.
+        if (!userMap.containsKey("username")) {
+            return null;
+        }
+
+        return new User(userId, (String) userMap.get("username"));
+    }
+
+    /**
+     * Converts a user object to a map so it can be inserted into firebase.
+     * @param user the user object you want to convert.
+     * @return a map representing the user object.
+     */
+    public static Map<String, Object> convertUserToMap(User user) {
+        Map<String, Object> userMap = new HashMap<>();
+
+        userMap.put("username", user.getUsername());
+
+        return userMap;
     }
 
 }

@@ -47,4 +47,12 @@ public class Group {
     public void setUsersIds(Map<String, Boolean> usersIds) {
         mUsersIds = usersIds;
     }
+
+    /**
+     * Adds a new userid to the list, if the id already exists in the list it doesn't add it.
+     * @param userId
+     */
+    public void addUserId(String userId) {
+        mUsersIds.put(userId, true);
+    }
 }

@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.itayr.noteshare.R;
 import com.example.itayr.noteshare.data.Group;
+import com.example.itayr.noteshare.data.User;
 
 import java.util.ArrayList;
 
@@ -18,9 +19,9 @@ import java.util.ArrayList;
  * Created by itayr on 1/30/2018.
  */
 
-public class UsersAdapter extends ArrayAdapter<String> {
-    public UsersAdapter(@NonNull Context context, @NonNull ArrayList<String> objects) {
-        super(context, 0, objects);
+public class UsersAdapter extends ArrayAdapter<User> {
+    public UsersAdapter(@NonNull Context context) {
+        super(context, 0, new ArrayList<User>());
     }
 
     @NonNull
@@ -30,12 +31,16 @@ public class UsersAdapter extends ArrayAdapter<String> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.group_layout, parent, false);
         }
 
-        String username = getItem(position);
+        User user = getItem(position);
 
         TextView mUsernameTextView = (TextView) convertView.findViewById(R.id.group_title_text_view);
-        mUsernameTextView.setText(username);
+        mUsernameTextView.setText(user.getUsername());
 
         return convertView;
+    }
+
+    public String getUserId(int position) {
+        return getItem(position).getId();
     }
 
 }
